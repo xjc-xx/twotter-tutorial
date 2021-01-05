@@ -1,10 +1,10 @@
 <!--
  * @Author: CC-TSR
  * @Date: 2021-01-05 10:54:51
- * @LastEditTime: 2021-01-05 16:41:43
+ * @LastEditTime: 2021-01-05 18:57:43
  * @LastEditors: xiejiancheng1999@qq.com
  * @Description: 
- * @FilePath: \twotter-tutorial\src\components\CreateTwootPanel.vue
+ * @FilePath: \twotter-tutorial\twotter-tutorial\src\components\CreateTwootPanel.vue
  * @可以输入预定的版权声明、个性签名、空行等
 -->
 <template>
@@ -157,6 +157,7 @@ export default {
       transition: all 0.8s ease;
       &:hover {
         box-shadow: 2px 2px 2px #203e3f;
+        cursor: pointer;
       }
     }
   }

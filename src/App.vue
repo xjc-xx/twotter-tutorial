@@ -1,10 +1,10 @@
 <!--
  * @Author: CC-TSR
  * @Date: 2020-12-28 16:07:36
- * @LastEditTime: 2021-01-05 17:39:28
+ * @LastEditTime: 2021-01-05 19:57:52
  * @LastEditors: xiejiancheng1999@qq.com
  * @Description: 
- * @FilePath: \twotter-tutorial\src\App.vue
+ * @FilePath: \twotter-tutorial\twotter-tutorial\src\App.vue
  * @可以输入预定的版权声明、个性签名、空行等
 -->
 <template>
@@ -24,7 +24,6 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
 }
 

@@ -1,10 +1,10 @@
 /*
  * @Author: CC-TSR
  * @Date: 2021-01-05 17:31:36
- * @LastEditTime: 2021-01-05 17:59:16
+ * @LastEditTime: 2021-01-05 18:42:20
  * @LastEditors: xiejiancheng1999@qq.com
  * @Description: 
- * @FilePath: \twotter-tutorial\src\router\index.js
+ * @FilePath: \twotter-tutorial\twotter-tutorial\src\router\index.js
  * @可以输入预定的版权声明、个性签名、空行等
  */
 import {
@@ -19,7 +19,7 @@ const routes = [{
     component: Home
   },
   {
-    path: 'user/:userId',
+    path: '/user/:userId',
     name: 'UserProfile',
     component: () => import('../views/UserProfile.vue')
   }

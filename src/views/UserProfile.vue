@@ -1,10 +1,10 @@
 <!--
  * @Author: CC-TSR
  * @Date: 2021-01-04 11:27:46
- * @LastEditTime: 2021-01-05 17:38:07
+ * @LastEditTime: 2021-01-05 20:31:42
  * @LastEditors: xiejiancheng1999@qq.com
  * @Description: 
- * @FilePath: \twotter-tutorial\src\views\Home.vue
+ * @FilePath: \twotter-tutorial\twotter-tutorial\src\views\UserProfile.vue
  * @可以输入预定的版权声明、个性签名、空行等
 -->
 <template>
@@ -35,31 +35,24 @@
 </template>
 
 <script>
-
 import { h } from "vue";
 import TwootItem from "@/components/TwootItem.vue";
 import CreateTwootPanel from "@/components/CreateTwootPanel.vue";
-import { reactive } from "vue";
+import { reactive, computed } from "vue";
+import { useRoute } from "vue-router";
+import users from "@/assets/users.js";
 
 export default {
   name: "UserProfile",
   setup() {
+    const route = new useRoute();
+    const userId = computed(() => route.params.userId);
+    
+    // if(userId) fetchUserFormApi(userId)
     const state = reactive({
       isLoading: false,
       followers: 0,
-      user: {
-        id: 1,
-        username: "cc_tsr",
-        firstName: "渐成",
-        lastName: "谢",
-        email: "xiejiancheng1999@qq.com",
-        isAdmin: true,
-        twoots: [
-          { id: 1, content: "Twotter is Amazing" },
-          { id: 2, content: "Vue is Awaresome" },
-        ],
-        twoots_star: [],
-      },
+      user: users[userId.value],
     });
 
     function followUser() {
@@ -97,11 +90,12 @@ export default {
       followUser,
       toggleStar,
       publishTwoot,
+      userId,
     };
   },
 
   components: { TwootItem, CreateTwootPanel },
-  
+
   watch: {
     followers(newFollowerCount, oldFollowerCount) {
       oldFollowerCount < newFollowerCount
@@ -122,7 +116,7 @@ export default {
             ),
           });
     },
-  }
+  },
 };
 </script>
 
@@ -143,6 +137,7 @@ export default {
   box-sizing: border-box;
   padding: 5vh 5%;
   min-height: 92vh;
+  background-color: rgb(243, 235, 235);
   .user-profile-sidebar {
     display: flex;
     flex-direction: column;
