@@ -1,7 +1,7 @@
 <!--
  * @Author: CC-TSR
  * @Date: 2021-01-04 11:27:46
- * @LastEditTime: 2021-01-04 18:11:44
+ * @LastEditTime: 2021-01-05 09:16:11
  * @LastEditors: xiejiancheng1999@qq.com
  * @Description: 
  * @FilePath: \twotter-tutorial\twotter-tutorial\src\components\UserProfile.vue
@@ -15,7 +15,10 @@
       </h1>
       <div v-if="user.isAdmin" class="user-profile__admin-badge">admin</div>
       <div><strong id="followerCount">Followers: </strong>{{ followers }}</div>
-      <form class="user-profile__create-twoot" @submit.prevent="publishTwoot">
+      <form
+        class="user-profile__create-twoot-form"
+        @submit.prevent="publishTwoot"
+      >
         <label for="newTwoot"><strong>New Twoot</strong></label>
         <textarea
           name="twootContent"
@@ -27,7 +30,7 @@
           v-model="newTwootContent"
         ></textarea>
 
-        <div class="user-profile__creat-twoot-type">
+        <div class="user-profile__creat-twoot-type-div">
           <label for="newTwootType"><strong>Type: </strong></label>
           <select name="twootType" id="newTwootType" v-model="newTwootType">
             <option
@@ -42,17 +45,17 @@
         <input type="submit" id="submit" name="submit_button" value="提交" />
       </form>
     </div>
-    <div class="user-profile__twoots-wraper">
-      <transition v-for="(twoot, index) in user.twoots" :key="twoot.id" name="fade">
-        <twoot-item
-          :key="index"
-          :username="user.username"
-          :twoot="twoot"
-          :isStar="user.twoots_star.indexOf(twoot.id) > -1"
-          @event__star="toggleStar"
-        />
-      </transition>
-    </div>
+    <transition-group name="fade" tag="div" class="user-profile__twoots-wraper">
+      <twoot-item
+        v-for="twoot in user.twoots"
+        :key="twoot.id"
+        :username="user.username"
+        :twoot="twoot"
+        :isStar="user.twoots_star.indexOf(twoot.id) > -1"
+        @event__star="toggleStar"
+        class="class-for-sommthing-Transition"
+      />
+    </transition-group>
   </div>
 </template>
 
@@ -146,63 +149,78 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang='scss' scoped>
+.fade-leave-active {
+  position: absolute;
+}
+.fade-leave-to,
+.fade-enter-from {
+  opacity: 0;
+  transform: translateX(60px);
+}
+
 .user-profile {
   display: grid;
   grid-template-columns: 1fr 3fr;
   width: 100%;
   box-sizing: border-box;
   padding: 50px 5%;
-}
 
-.user-profile__user-panel {
-  display: flex;
-  flex-direction: column;
-  margin-right: 50px;
-  padding: 20px;
-  background-color: white;
-  border-radius: 5px;
-  border: 1px solid #0fe3e8;
-}
+  .user-profile__user-panel {
+    display: flex;
+    flex-direction: column;
+    margin-right: 50px;
+    padding: 20px;
+    background-color: white;
+    border-radius: 5px;
+    border: 1px solid #0fe3e8;
 
-.user-profile__admin-badge {
-  background-color: purple;
-  color: white;
-  border-radius: 5px;
-  padding: 0 10px;
-  margin-right: auto;
-}
+    h1 {
+      margin: 0 0 10px 0;
+    }
+    .user-profile__admin-badge {
+      background-color: purple;
+      color: white;
+      border-radius: 5px;
+      padding: 0 10px;
+      margin-right: auto;
+    }
 
-h1 {
-  margin: 0 0 10px 0;
-}
-.user-profile__twoots-wrapper {
-  display: grid;
-  grid-gap: 10px;
-}
-.user-profile__create-twoot {
-  margin-top: 5px;
-  padding-top: 20px;
-  display: flex;
-  flex-direction: column;
-}
-.user-profile__creat-twoot-type {
-  margin-top: 20px;
-}
-#newTwootType {
-  min-width: 100px;
-  margin-left: 10px;
-}
-#newTwootType:focus {
-  outline: none;
-}
-textarea {
-  resize: none;
-  border: #2e3838 solid 1px;
-}
-textarea:focus {
-  border: #22c5aa solid 1px;
-  border-radius: 5px;
-  outline: none;
+    .user-profile__create-twoot-form {
+      margin-top: 5px;
+      padding-top: 20px;
+      display: flex;
+      flex-direction: column;
+
+      .user-profile__creat-twoot-type-div {
+        margin-top: 20px;
+      }
+
+      #newTwootType {
+        min-width: 100px;
+        margin-left: 10px;
+      }
+      #newTwootType:focus {
+        outline: none;
+      }
+      textarea {
+        resize: none;
+        border: #2e3838 solid 1px;
+      }
+      textarea:focus {
+        border: #22c5aa solid 1px;
+        border-radius: 5px;
+        outline: none;
+      }
+    }
+  }
+  .user-profile__twoots-wrapper {
+    display: grid;
+    grid-gap: 10px;
+
+    .class-for-sommthing-Transition {
+      transition: all 0.5s ease;
+    }
+  }
 }
 </style>
