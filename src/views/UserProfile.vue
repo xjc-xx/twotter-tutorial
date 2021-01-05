@@ -1,13 +1,14 @@
 <!--
  * @Author: CC-TSR
  * @Date: 2021-01-04 11:27:46
- * @LastEditTime: 2021-01-05 20:31:42
+ * @LastEditTime: 2021-01-05 23:07:00
  * @LastEditors: xiejiancheng1999@qq.com
  * @Description: 
  * @FilePath: \twotter-tutorial\twotter-tutorial\src\views\UserProfile.vue
  * @可以输入预定的版权声明、个性签名、空行等
 -->
 <template>
+  <Header />
   <div class="user-profile">
     <div class="user-profile-sidebar">
       <div class="user-profile__user-panel">
@@ -41,6 +42,8 @@ import CreateTwootPanel from "@/components/CreateTwootPanel.vue";
 import { reactive, computed } from "vue";
 import { useRoute } from "vue-router";
 import users from "@/assets/users.js";
+import Header from "@/components/TheHeader";
+
 
 export default {
   name: "UserProfile",
@@ -94,7 +97,7 @@ export default {
     };
   },
 
-  components: { TwootItem, CreateTwootPanel },
+  components: { TwootItem, CreateTwootPanel, Header},
 
   watch: {
     followers(newFollowerCount, oldFollowerCount) {

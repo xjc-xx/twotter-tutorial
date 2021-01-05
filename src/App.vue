@@ -1,22 +1,21 @@
 <!--
  * @Author: CC-TSR
  * @Date: 2020-12-28 16:07:36
- * @LastEditTime: 2021-01-05 19:57:52
+ * @LastEditTime: 2021-01-05 23:06:37
  * @LastEditors: xiejiancheng1999@qq.com
  * @Description: 
  * @FilePath: \twotter-tutorial\twotter-tutorial\src\App.vue
  * @可以输入预定的版权声明、个性签名、空行等
 -->
 <template>
-  <Header />
+
   <router-view />
 </template>
 <script>
 // @ is an alias to /src
-import Header from "@/components/TheHeader";
 
 export default {
-  components: { Header },
+  
 };
 </script>
 <style lang="scss">
