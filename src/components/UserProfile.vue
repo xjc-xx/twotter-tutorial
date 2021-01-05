@@ -1,7 +1,7 @@
 <!--
  * @Author: CC-TSR
  * @Date: 2021-01-04 11:27:46
- * @LastEditTime: 2021-01-05 09:16:11
+ * @LastEditTime: 2021-01-05 10:05:29
  * @LastEditors: xiejiancheng1999@qq.com
  * @Description: 
  * @FilePath: \twotter-tutorial\twotter-tutorial\src\components\UserProfile.vue
@@ -16,17 +16,23 @@
       <div v-if="user.isAdmin" class="user-profile__admin-badge">admin</div>
       <div><strong id="followerCount">Followers: </strong>{{ followers }}</div>
       <form
-        class="user-profile__create-twoot-form"
+        :class="[
+          { '--exceed': newTwootCaracterCount > 180 },
+          'user-profile__create-twoot-form',
+        ]"
         @submit.prevent="publishTwoot"
       >
-        <label for="newTwoot"><strong>New Twoot</strong></label>
+        <label for="newTwoot">
+          <strong>New Twoot</strong>
+          ({{ newTwootCaracterCount }} <em> /180</em>)
+        </label>
         <textarea
           name="twootContent"
           id="newTwoot"
           cols="20"
           rows="4"
           placeholder="发表一些新鲜事..."
-          maxlength="150"
+          maxlength="200"
           v-model="newTwootContent"
         ></textarea>
 
@@ -53,7 +59,6 @@
         :twoot="twoot"
         :isStar="user.twoots_star.indexOf(twoot.id) > -1"
         @event__star="toggleStar"
-        class="class-for-sommthing-Transition"
       />
     </transition-group>
   </div>
@@ -62,6 +67,7 @@
 <script>
 import { h } from "vue";
 import TwootItem from "./TwootItem.vue";
+import common from '../assets/js/common'
 
 export default {
   name: "UserProfile",
@@ -124,6 +130,9 @@ export default {
     fullName() {
       return ` ${this.user.lastName} ${this.user.firstName}`;
     },
+    newTwootCaracterCount() {
+      return this.newTwootContent.length;
+    },
   },
   methods: {
     followUser() {
@@ -136,12 +145,17 @@ export default {
         : this.user.twoots_star.push(id);
     },
     publishTwoot() {
+      if (!this.newTwootContent) return;
+      if(this.newTwootCaracterCount > 180){
+          common.toast("字数太多了，恕我背不动",'warning')
+          return
+      }
       let newId = this.user.twoots.length + 1;
       let newTwoot = {
         id: newId,
         content: this.newTwootContent,
       };
-      console.log(newTwoot);
+      this.newTwootContent = "";
       this.user.twoots.unshift(newTwoot);
     },
   },
@@ -165,7 +179,7 @@ export default {
   width: 100%;
   box-sizing: border-box;
   padding: 50px 5%;
-
+  height: 100vh;
   .user-profile__user-panel {
     display: flex;
     flex-direction: column;
@@ -191,6 +205,16 @@ export default {
       padding-top: 20px;
       display: flex;
       flex-direction: column;
+      &.--exceed {
+        color: red;
+        border-color: red;
+        
+        input {
+            background-color: rgb(255, 23, 77);
+            border: none;
+            color: white;
+        }
+      }
 
       .user-profile__creat-twoot-type-div {
         margin-top: 20px;
@@ -199,6 +223,7 @@ export default {
       #newTwootType {
         min-width: 100px;
         margin-left: 10px;
+        margin-bottom: 20px;
       }
       #newTwootType:focus {
         outline: none;
@@ -206,6 +231,8 @@ export default {
       textarea {
         resize: none;
         border: #2e3838 solid 1px;
+        min-height: 28vh;
+        margin-top: 5px;
       }
       textarea:focus {
         border: #22c5aa solid 1px;
@@ -217,10 +244,6 @@ export default {
   .user-profile__twoots-wrapper {
     display: grid;
     grid-gap: 10px;
-
-    .class-for-sommthing-Transition {
-      transition: all 0.5s ease;
-    }
   }
 }
 </style>
