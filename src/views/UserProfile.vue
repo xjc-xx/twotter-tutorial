@@ -1,10 +1,10 @@
 <!--
  * @Author: CC-TSR
  * @Date: 2021-01-04 11:27:46
- * @LastEditTime: 2021-01-05 16:44:52
+ * @LastEditTime: 2021-01-05 17:38:07
  * @LastEditors: xiejiancheng1999@qq.com
  * @Description: 
- * @FilePath: \twotter-tutorial\src\components\UserProfile.vue
+ * @FilePath: \twotter-tutorial\src\views\Home.vue
  * @可以输入预定的版权声明、个性签名、空行等
 -->
 <template>
@@ -37,8 +37,8 @@
 <script>
 
 import { h } from "vue";
-import TwootItem from "./TwootItem.vue";
-import CreateTwootPanel from "./CreateTwootPanel.vue";
+import TwootItem from "@/components/TwootItem.vue";
+import CreateTwootPanel from "@/components/CreateTwootPanel.vue";
 import { reactive } from "vue";
 
 export default {

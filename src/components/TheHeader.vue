@@ -1,7 +1,7 @@
 <!--
  * @Author: CC-TSR
  * @Date: 2021-01-05 14:18:26
- * @LastEditTime: 2021-01-05 16:26:44
+ * @LastEditTime: 2021-01-05 17:45:15
  * @LastEditors: xiejiancheng1999@qq.com
  * @Description: 
  * @FilePath: \twotter-tutorial\src\components\TheHeader.vue
@@ -14,13 +14,18 @@
       <li class="links">
         <router-link to="/"> Home </router-link>
       </li>
+      <li class="links">
+        <router-link to="/user"> User </router-link>
+      </li>
+      <li class="links">
+        <router-link to="/login"> Login </router-link>
+      </li>
     </ul>
   </nav>
 </template>
 
 <script>
-export default {
-};
+export default {};
 </script>
 
 <style lang="scss" scoped>
@@ -44,9 +49,9 @@ export default {
 
   .nav-links {
     display: flex;
-
+    margin-left: 60px;
     .links {
-      padding-right: 20px;
+      padding-right: 30px;
       list-style: none;
       &:hover {
         text-decoration: underline;
@@ -57,9 +62,9 @@ export default {
     color: #2c3e50;
     text-decoration: none;
     font-weight: bold;
-
-    &.vue-school-active-class {
-      color: #ab26ab;
+    font-size: 3vh;
+    &.router-link-active {
+      color: #cf16cf;
     }
   }
 }

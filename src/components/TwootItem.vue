@@ -1,7 +1,7 @@
 <!--
  * @Author: CC-TSR
  * @Date: 2021-01-04 14:34:11
- * @LastEditTime: 2021-01-05 17:27:30
+ * @LastEditTime: 2021-01-05 17:55:19
  * @LastEditors: xiejiancheng1999@qq.com
  * @Description: 
  * @FilePath: \twotter-tutorial\src\components\TwootItem.vue
@@ -84,6 +84,7 @@ export default {
   }
 
   .twoot-item__user {
+    text-align: left;
     font-weight: bold;
     margin-bottom: 5px;
   }
