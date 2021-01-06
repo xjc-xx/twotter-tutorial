@@ -1,7 +1,7 @@
 '''
 Author: CC-TSR
 Date: 2021-01-04 21:13:10
-LastEditTime: 2021-01-06 12:30:23
+LastEditTime: 2021-01-06 13:13:59
 LastEditors: xiejiancheng1999@qq.com
 Description: 
 FilePath: \python\api.py
@@ -52,4 +52,4 @@ def Login():
 
 
 if __name__ == '__main__':
-    app.run(host='127.0.0.1', port=9999)
+    app.run(host='192.168.1.66', port=9999)

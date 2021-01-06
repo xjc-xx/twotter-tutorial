@@ -1,7 +1,7 @@
 <!--
  * @Author: CC-TSR
  * @Date: 2021-01-05 18:27:33
- * @LastEditTime: 2021-01-06 12:56:05
+ * @LastEditTime: 2021-01-06 13:14:50
  * @LastEditors: xiejiancheng1999@qq.com
  * @Description: 
  * @FilePath: \twotter-tutorial\src\views\Login.vue
@@ -79,7 +79,7 @@ export default {
     submitLogin(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          const url = "http://127.0.0.1:9999/Login";
+          const url = "http://219.145.19.17:9999/Login";
           if (this.reqFlag.login) {
             this.reqFlag.login = false;
             let params = {
