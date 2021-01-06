@@ -1,7 +1,7 @@
 <!--
  * @Author: CC-TSR
  * @Date: 2021-01-05 18:27:33
- * @LastEditTime: 2021-01-06 12:56:05
+ * @LastEditTime: 2021-01-06 17:27:52
  * @LastEditors: xiejiancheng1999@qq.com
  * @Description: 
  * @FilePath: \twotter-tutorial\src\views\Login.vue
@@ -79,7 +79,7 @@ export default {
     submitLogin(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          const url = "http://127.0.0.1:9999/Login";
+          const url = "http://192.168.1.113:9999/Login";
           if (this.reqFlag.login) {
             this.reqFlag.login = false;
             let params = {
@@ -102,6 +102,8 @@ export default {
                   this.common.toast("登陆成功", "success");
 
                   this.$router.push("/");
+                } else {
+                  this.common.toast("用户名或密码错误", "error");
                 }
                 this.reqFlag.login = true;
               },

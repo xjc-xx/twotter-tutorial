@@ -2,11 +2,12 @@
     "cc_tsr": {
         "id": 1,
         "username": "cc_tsr",
-        "password":"abcd123456",
+        "password": "abcd123456",
         "firstName": "渐成",
         "lastName": "谢",
         "email": "xiejiancheng1999@qq.com",
         "isAdmin": true,
+        "userHeadImage": "http://127.0.0.1:9999/static/cc_tsr.jpg",
         "twoots": [{
                 "id": 1,
                 "content": "Twotter is Amazing"
@@ -28,5 +29,18 @@
         "isAdmin": false,
         "twoots": null,
         "twoots_star": []
+    },
+    "yello_duck": {
+        "id": 2,
+        "userHeadImage": "http://127.0.0.1:9999/static/default.jpg",
+        "username": "yello_duck",
+        "password": "123456",
+        "firstName": "小",
+        "lastName": "黄鸭",
+        "email": null,
+        "isAdmin": false,
+        "twoots": null,
+        "twoots_star": []
     }
+    
 }
