@@ -1,10 +1,10 @@
 <!--
  * @Author: CC-TSR
  * @Date: 2021-01-04 11:27:46
- * @LastEditTime: 2021-01-05 23:07:00
+ * @LastEditTime: 2021-01-06 13:02:01
  * @LastEditors: xiejiancheng1999@qq.com
  * @Description: 
- * @FilePath: \twotter-tutorial\twotter-tutorial\src\views\UserProfile.vue
+ * @FilePath: \twotter-tutorial\src\views\UserProfile.vue
  * @可以输入预定的版权声明、个性签名、空行等
 -->
 <template>
@@ -39,23 +39,26 @@
 import { h } from "vue";
 import TwootItem from "@/components/TwootItem.vue";
 import CreateTwootPanel from "@/components/CreateTwootPanel.vue";
-import { reactive, computed } from "vue";
-import { useRoute } from "vue-router";
-import users from "@/assets/users.js";
+import { reactive } from "vue";
 import Header from "@/components/TheHeader";
-
+import { useStore } from 'vuex';
+import { useRouter } from 'vue-router';
 
 export default {
   name: "UserProfile",
   setup() {
-    const route = new useRoute();
-    const userId = computed(() => route.params.userId);
-    
+    const store = useStore()
+    const router = useRouter()
+    if (!store.state.user) {
+      router.push("/login");
+      return;
+    }
+
     // if(userId) fetchUserFormApi(userId)
     const state = reactive({
       isLoading: false,
       followers: 0,
-      user: users[userId.value],
+      user: store.state.user,
     });
 
     function followUser() {
@@ -93,11 +96,10 @@ export default {
       followUser,
       toggleStar,
       publishTwoot,
-      userId,
     };
   },
 
-  components: { TwootItem, CreateTwootPanel, Header},
+  components: { TwootItem, CreateTwootPanel, Header },
 
   watch: {
     followers(newFollowerCount, oldFollowerCount) {

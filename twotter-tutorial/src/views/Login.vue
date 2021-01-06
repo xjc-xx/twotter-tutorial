@@ -1,7 +1,7 @@
 <!--
  * @Author: CC-TSR
  * @Date: 2021-01-05 18:27:33
- * @LastEditTime: 2021-01-06 12:42:14
+ * @LastEditTime: 2021-01-06 12:56:05
  * @LastEditors: xiejiancheng1999@qq.com
  * @Description: 
  * @FilePath: \twotter-tutorial\src\views\Login.vue
@@ -95,7 +95,7 @@ export default {
                   //  把该用户的数据保存到localStorage
                   //  localStorage 和 sessionStorage 属性允许在浏览器中存储 key/value 对的数据。
                   //  localStorage 用于长久保存整个网站的数据，保存的数据没有过期时间，直到手动去删除。
-                  localStorage.setItem("userInfo", JSON.stringify(data));
+                  sessionStorage.setItem("userInfo", JSON.stringify(data));
                   //  调用action, 提交Mutations
 
                   this.$store.commit("setUser", data);
