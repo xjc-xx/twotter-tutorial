@@ -1,7 +1,7 @@
 <!--
  * @Author: CC-TSR
  * @Date: 2021-01-04 11:27:46
- * @LastEditTime: 2021-01-06 13:02:01
+ * @LastEditTime: 2021-01-06 18:23:53
  * @LastEditors: xiejiancheng1999@qq.com
  * @Description: 
  * @FilePath: \twotter-tutorial\src\views\UserProfile.vue
@@ -12,7 +12,12 @@
   <div class="user-profile">
     <div class="user-profile-sidebar">
       <div class="user-profile__user-panel">
-        <h1 class="user-profile__username">@ {{ state.user.username }}</h1>
+        <h1 class="user-profile__username">
+          @ {{ state.user.username }}
+          <div class="head_img">
+            <img class="head-image" :src="state.user.userHeadImage" alt="" />
+          </div>
+        </h1>
         <div v-if="state.user.isAdmin" class="user-profile__admin-badge">
           admin
         </div>
@@ -24,11 +29,11 @@
     </div>
     <transition-group name="fade" tag="div" class="user-profile__twoots-wraper">
       <twoot-item
-        v-for="twoot in state.user.twoots"
+        v-for="twoot in state.Alltwoots"
         :key="twoot.id"
-        :username="state.user.username"
+        :username="twoot.username"
         :twoot="twoot"
-        :isStar="state.user.twoots_star.indexOf(twoot.id) > -1"
+        :isStar="twoot.isStar"
         @event__star="toggleStar"
       />
     </transition-group>
@@ -39,44 +44,62 @@
 import { h } from "vue";
 import TwootItem from "@/components/TwootItem.vue";
 import CreateTwootPanel from "@/components/CreateTwootPanel.vue";
-import { reactive } from "vue";
+import { reactive, getCurrentInstance } from "vue";
 import Header from "@/components/TheHeader";
-import { useStore } from 'vuex';
-import { useRouter } from 'vue-router';
+import { useStore } from "vuex";
 
 export default {
   name: "UserProfile",
   setup() {
-    const store = useStore()
-    const router = useRouter()
-    if (!store.state.user) {
-      router.push("/login");
-      return;
-    }
-
+    const store = useStore();
+    const { ctx } = getCurrentInstance();
     // if(userId) fetchUserFormApi(userId)
     const state = reactive({
       isLoading: false,
       followers: 0,
       user: store.state.user,
+      Alltwoots: [],
     });
+    let url = "http://192.168.1.113:9999/";
+
+    function getAllTwoots() {
+      ctx.$http.get(`${url}GetTwoot`).then((res) => {
+        state.Alltwoots = res.data;
+      });
+    }
+    var handleGetTwoots = setInterval(getAllTwoots, 500);
 
     function followUser() {
       state.followers++;
     }
+
     function toggleStar(id) {
-      state.user.twoots_star.indexOf(id) > -1
-        ? state.user.twoots_star.splice(state.user.twoots_star.indexOf(id), 1)
-        : state.user.twoots_star.push(id);
+      clearInterval(handleGetTwoots)
+      ctx.$http.post(`${url}StarTwoot`, {"id":id}).then((res) => {
+        if (res.data === "200") {
+          console.log("点赞");
+          handleGetTwoots = setInterval(getAllTwoots, 500);
+        }
+      },(err)=>{
+        console.log(err)
+      });
     }
+
     function publishTwoot(twoot) {
-      let newId = state.user.twoots.length + 1;
+      let newId = state.Alltwoots.length + 1;
       let newTwoot = {
         id: newId,
         content: twoot.value.content,
+        username: store.state.user.username,
+        isStar: false,
       };
       gotoTop();
-      state.user.twoots.unshift(newTwoot);
+      // state.user.twoots.unshift(newTwoot);
+      ctx.$http.post(`${url}CreateTwoot`, newTwoot).then((res) => {
+        if (res.data == "200") {
+          ctx.common.toast("发表成功", "success");
+        }
+      });
     }
     function gotoTop() {
       let top = document.documentElement.scrollTop;
@@ -142,7 +165,6 @@ export default {
   box-sizing: border-box;
   padding: 5vh 5%;
   min-height: 92vh;
-  background-color: rgb(243, 235, 235);
   .user-profile-sidebar {
     display: flex;
     flex-direction: column;
@@ -154,12 +176,24 @@ export default {
     .user-profile__user-panel {
       display: flex;
       flex-direction: column;
-      padding: 20px;
-      background-color: white;
-      border-radius: 5px;
+      padding: 2vw;
+      border-radius: 2vw;
       border: 1px solid #57e6ce;
+      transition: all 0.5s ease;
+      &:hover {
+        box-shadow: 2px 2px 2px #095a4c;
+        border-radius: 2vw;
+        transform: scale(1.1, 1.1);
+      }
       h1 {
         margin: 0 0 10px 0;
+        display: flex;
+        .head-image {
+          border-radius: 3vh;
+          margin-left: 1.5vw;
+          min-width: 5vh;
+          max-height: 5vh;
+        }
       }
       .user-profile__admin-badge {
         background-color: purple;

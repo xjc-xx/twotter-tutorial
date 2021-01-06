@@ -1,7 +1,7 @@
 <!--
  * @Author: CC-TSR
  * @Date: 2021-01-05 18:27:33
- * @LastEditTime: 2021-01-06 13:14:50
+ * @LastEditTime: 2021-01-06 18:39:29
  * @LastEditors: xiejiancheng1999@qq.com
  * @Description: 
  * @FilePath: \twotter-tutorial\src\views\Login.vue
@@ -102,6 +102,8 @@ export default {
                   this.common.toast("登陆成功", "success");
 
                   this.$router.push("/");
+                } else {
+                  this.common.toast("用户名或密码错误", "error");
                 }
                 this.reqFlag.login = true;
               },

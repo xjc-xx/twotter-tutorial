@@ -1,17 +1,17 @@
 <!--
  * @Author: CC-TSR
  * @Date: 2021-01-05 14:18:26
- * @LastEditTime: 2021-01-05 21:13:56
+ * @LastEditTime: 2021-01-06 16:11:38
  * @LastEditors: xiejiancheng1999@qq.com
  * @Description: 
- * @FilePath: \twotter-tutorial\twotter-tutorial\src\components\TheHeader.vue
+ * @FilePath: \twotter-tutorial\src\components\TheHeader.vue
  * @可以输入预定的版权声明、个性签名、空行等
 -->
 <template>
   <nav id="nav">
     <router-link
       :to="{
-        name: 'Home'
+        name: 'UserInfo',
       }"
       ><p class="logo">Twotter</p></router-link
     >
@@ -20,23 +20,43 @@
         <router-link to="/"> Home </router-link>
       </li>
       <li class="links">
-        <router-link to="/user/0"> User </router-link>
+        <router-link to="/info"> User </router-link>
       </li>
       <li class="links">
-        <router-link to="/login"> Login </router-link>
+        <a @click="logout"> Sign Out </a>
       </li>
+      <li class="links"></li>
     </ul>
+    <div
+      class="links"
+      style="margin-left: auto; font-size: 3vh; cursor: pointer"
+    >
+      {{ username }}
+    </div>
   </nav>
 </template>
 
 <script>
-import { useRoute } from "vue-router";
+import { h } from "vue";
 export default {
-  setup() {
-    const router = new useRoute();
-    return {
-      router,
-    };
+  computed: {
+    username() {
+      return this.$store.state.user.username;
+    },
+  },
+  methods: {
+    logout() {
+      this.$notify({
+        title: "提示",
+        message: h(
+          "i",
+          { style: "color: red" },
+          `${this.username} 已经退出了登录`
+        ),
+      });
+      sessionStorage.clear();
+      this.$router.push({ name: "Login" });
+    },
   },
 };
 </script>
@@ -50,24 +70,36 @@ export default {
   box-sizing: border-box;
   height: 7vh;
   box-shadow: 0 2px 5px #2c3e50;
-  background-color: #57e6ce;
   border-bottom: 1px solid grey;
   z-index: 2;
   .logo {
-    padding-left: 2vw;
+    margin-left: 2vw;
     font-size: 25px;
+    padding: 0.5vw 1vw;
     color: purple;
+    border-radius: 10px;
+    text-align: center;
     font-weight: bold;
+    &:hover {
+      box-shadow: 2px 2px 2px #2c3e50;
+    }
   }
 
   .nav-links {
     display: flex;
-    margin-left: 60px;
+    margin-left: 3vw;
     .links {
-      padding-right: 30px;
+      margin: auto 10px;
+      padding: 10px;
+      min-width: 8vw;
+      box-sizing: border-box;
       list-style: none;
+      border-radius: 4vw;
+      text-align: center;
       &:hover {
-        text-decoration: underline;
+        background-color: #e7e9eb;
+        color: #ce73ce;
+        box-shadow: 2px 2px 2px #2c3e50;
       }
     }
   }
@@ -76,6 +108,7 @@ export default {
     text-decoration: none;
     font-weight: bold;
     font-size: 3vh;
+    cursor: pointer;
     &.router-link-active {
       color: #cf16cf;
     }

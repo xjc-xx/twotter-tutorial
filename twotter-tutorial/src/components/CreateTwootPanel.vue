@@ -1,10 +1,10 @@
 <!--
  * @Author: CC-TSR
  * @Date: 2021-01-05 10:54:51
- * @LastEditTime: 2021-01-05 18:57:43
+ * @LastEditTime: 2021-01-06 17:12:10
  * @LastEditors: xiejiancheng1999@qq.com
  * @Description: 
- * @FilePath: \twotter-tutorial\twotter-tutorial\src\components\CreateTwootPanel.vue
+ * @FilePath: \twotter-tutorial\src\components\CreateTwootPanel.vue
  * @可以输入预定的版权声明、个性签名、空行等
 -->
 <template>
@@ -85,7 +85,6 @@ export default {
         ctx.common.toast("字数太多了，恕我背不动", "warning");
         return;
       }
-      console.log(twoot);
       ctx.emit("publish", twoot);
       state.newTwootContent = "";
     }
