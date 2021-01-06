@@ -1,22 +1,19 @@
 <!--
  * @Author: CC-TSR
  * @Date: 2020-12-28 16:07:36
- * @LastEditTime: 2021-01-05 23:06:37
+ * @LastEditTime: 2021-01-06 12:39:10
  * @LastEditors: xiejiancheng1999@qq.com
  * @Description: 
- * @FilePath: \twotter-tutorial\twotter-tutorial\src\App.vue
+ * @FilePath: \twotter-tutorial\src\App.vue
  * @可以输入预定的版权声明、个性签名、空行等
 -->
 <template>
-
   <router-view />
 </template>
 <script>
 // @ is an alias to /src
 
-export default {
-  
-};
+export default {};
 </script>
 <style lang="scss">
 #app {

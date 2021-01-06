@@ -1,7 +1,7 @@
 <!--
  * @Author: CC-TSR
  * @Date: 2021-01-05 18:27:33
- * @LastEditTime: 2021-01-06 11:18:37
+ * @LastEditTime: 2021-01-06 11:21:24
  * @LastEditors: xiejiancheng1999@qq.com
  * @Description: 
  * @FilePath: \twotter-tutorial\twotter-tutorial\src\views\Home.vue
@@ -12,12 +12,14 @@
 </template>
 
 <script>
+import { useRouter } from 'vue-router'
 import {useStore} from 'vuex'
 export default {
-  setup(props) {
+  setup() {
     const store = useStore()
+    const router = useRouter()
     if (!store.state.user) {
-      
+      router.push("/login")
     }
   }
   

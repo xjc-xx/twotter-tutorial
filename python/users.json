@@ -1,0 +1,32 @@
+{
+    "cc_tsr": {
+        "id": 1,
+        "username": "cc_tsr",
+        "password":"abcd123456",
+        "firstName": "渐成",
+        "lastName": "谢",
+        "email": "xiejiancheng1999@qq.com",
+        "isAdmin": true,
+        "twoots": [{
+                "id": 1,
+                "content": "Twotter is Amazing"
+            },
+            {
+                "id": 2,
+                "content": "Vue is Awaresome"
+            }
+        ],
+        "twoots_star": []
+    },
+    "Vue3_Robot": {
+        "id": 2,
+        "username": "Vue3_Robot",
+        "password": "123456",
+        "firstName": "腌",
+        "lastName": "萝卜",
+        "email": null,
+        "isAdmin": false,
+        "twoots": null,
+        "twoots_star": []
+    }
+}

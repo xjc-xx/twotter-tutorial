@@ -1,10 +1,10 @@
 <!--
  * @Author: CC-TSR
  * @Date: 2021-01-05 18:27:33
- * @LastEditTime: 2021-01-06 11:15:10
+ * @LastEditTime: 2021-01-06 12:42:14
  * @LastEditors: xiejiancheng1999@qq.com
  * @Description: 
- * @FilePath: \twotter-tutorial\twotter-tutorial\src\views\Login.vue
+ * @FilePath: \twotter-tutorial\src\views\Login.vue
  * @可以输入预定的版权声明、个性签名、空行等
 -->
 <template>
@@ -47,13 +47,13 @@
 export default {
   data() {
     const validate = (rule, value, callback) => {
-      const reg = /^[0-9a-zA-Z]*$/g;
+      const reg = /^\w{3,20}$/g;
       if (!value) {
         callback(new Error("请输入内容"));
       } else if (value.length < 3 || value.length > 15) {
         callback(new Error("内容长度需在 3 到 15 个字符"));
       } else if (!reg.test(value)) {
-        callback(new Error("内容需为字母或数字"));
+        callback(new Error("内容需为字母或数字或下划线"));
       } else {
         callback();
       }
@@ -79,32 +79,37 @@ export default {
     submitLogin(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          const url = "userLogin";
+          const url = "http://127.0.0.1:9999/Login";
           if (this.reqFlag.login) {
             this.reqFlag.login = false;
             let params = {
               name: this.formData.name,
-              password: this.$md5(this.formData.password),
+              password: this.formData.password,
             };
             // 向后端发送请求
-            this.$http(url, params).then((res) => {
-              if (res.code == 1) {
-                // 登录成功
-                let data = res.data;
-                //  把该用户的数据保存到localStorage
-                //  localStorage 和 sessionStorage 属性允许在浏览器中存储 key/value 对的数据。
-                //  localStorage 用于长久保存整个网站的数据，保存的数据没有过期时间，直到手动去删除。
-                localStorage.setItem("userInfo", JSON.stringify(data));
-                //  调用action, 提交Mutations
-                this.$store.dispatch("saveUserInfo", data);
-                this.$common.toast("登陆成功", "success", false);
-                this.$router.push({
-                  path: "/home/user",
-                  query: {},
-                });
+            this.$http.post(url, params).then(
+              (res) => {
+                if (res.data.stateCode == 200) {
+                  // 登录成功
+                  let data = res.data;
+                  //  把该用户的数据保存到localStorage
+                  //  localStorage 和 sessionStorage 属性允许在浏览器中存储 key/value 对的数据。
+                  //  localStorage 用于长久保存整个网站的数据，保存的数据没有过期时间，直到手动去删除。
+                  localStorage.setItem("userInfo", JSON.stringify(data));
+                  //  调用action, 提交Mutations
+
+                  this.$store.commit("setUser", data);
+                  this.common.toast("登陆成功", "success");
+
+                  this.$router.push("/");
+                }
+                this.reqFlag.login = true;
+              },
+              (err) => {
+                console.log(err);
+                this.reqFlag.login = true;
               }
-              this.reqFlag.login = true;
-            });
+            );
           }
         } else {
           console.log("error submit!!");
