@@ -14,8 +14,9 @@ import ElementPlus from 'element-plus';
 import 'element-plus/lib/theme-chalk/index.css';
 import common from './assets/js/common'
 import router from './router'
+import store from './store'
 
-const app = createApp(App).use(router)
+const app = createApp(App).use(store).use(router)
 app.use(ElementPlus)
 app.config.globalProperties.common = common
 
