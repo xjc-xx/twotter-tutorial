@@ -1,7 +1,7 @@
 /*
  * @Author: CC-TSR
  * @Date: 2021-01-05 17:31:36
- * @LastEditTime: 2021-01-06 14:53:32
+ * @LastEditTime: 2021-01-07 16:42:14
  * @LastEditors: xiejiancheng1999@qq.com
  * @Description: 
  * @FilePath: \twotter-tutorial\src\router\index.js
@@ -29,6 +29,11 @@ const routes = [
     path: '/login',
     name: 'Login',
     component: () => import('../views/Login.vue')
+  },
+  {
+    path:'/covid',
+    name:'CovidMap',
+    component: () => import('../views/CovidMap.vue')
   }
 ]
 
