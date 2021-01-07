@@ -1,7 +1,7 @@
 '''
 Author: CC-TSR
 Date: 2021-01-04 21:13:10
-LastEditTime: 2021-01-07 14:20:15
+LastEditTime: 2021-01-07 14:21:21
 LastEditors: xiejiancheng1999@qq.com
 Description: 
 FilePath: \python\api.py
@@ -87,7 +87,7 @@ def Register():
     userInfo = inputUserInfo.get('user')
     userInfo = json.loads(userInfo)
     filename = secure_filename(userInfo["username"]) + '.' + inputUserInfo.get('imgName').split('.')[1]
-    face.save(os.path.join('./static', filename))
+    # face.save(os.path.join('./static', filename))
     return ""
 
 
