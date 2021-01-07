@@ -1,7 +1,7 @@
 <!--
  * @Author: CC-TSR
  * @Date: 2021-01-07 09:40:31
- * @LastEditTime: 2021-01-07 11:19:50
+ * @LastEditTime: 2021-01-07 13:58:31
  * @LastEditors: xiejiancheng1999@qq.com
  * @Description: 
  * @FilePath: \twotter-tutorial\src\components\register.vue
@@ -33,9 +33,11 @@
         <el-upload
           class="avatar-uploader"
           :action="uploadUrl"
-          :on-success="handleAvatarSuccess"
+          :on-change="handleChange"
           :before-upload="beforeAvatarUpload"
+          :limit="1"
           :show-file-list="false"
+          :auto-upload="false"
         >
           <img v-if="imageUrl" :src="imageUrl" class="avatar" alt="" />
           <em v-else class="el-icon-plus avatar-uploader-icon" />
@@ -77,7 +79,9 @@ export default {
       reqFlag: {
         add: true,
       },
-      imageUrl: ''
+      imageUrl: "",
+      
+      file:[]
     };
   },
   computed: {
@@ -113,7 +117,11 @@ export default {
               lastName: "不知名的",
               state: this.state,
             };
-            this.$http.post(url, params).then((res) => {
+            let fd = new FormData()
+            
+            fd.append('file', this.file[0].raw)
+            fd.append('user',JSON.stringify(params))
+            this.$http.post(url, fd).then((res) => {
               if (res.code == 1) {
                 this.$common.toast("添加成功", "success", false);
                 this.$emit("addCallBack");
@@ -131,26 +139,30 @@ export default {
     // 取消
     onCancel(formName) {
       this.changeShowFlag();
+      this.imageUrl = "";
       this.$refs[formName].resetFields();
     },
     // 关闭弹出框
     closeDialog() {
       this.$refs["formData"].resetFields();
+      this.imageUrl = "";
     },
-    handleAvatarSuccess(res, file) {
-      this.imageUrl = URL.createObjectURL(file.raw);
+    
+    handleChange(res, file) {
+      console.log(file)
+      this.imageUrl = URL.createObjectURL(file[0].raw);
+      this.file = file
     },
     beforeAvatarUpload(file) {
-      const isJPG = file.type === "image/jpeg";
-      const isLt2M = file.size / 1024 / 1024 < 2;
+      console.log(file.type);
 
-      if (!isJPG) {
-        this.common.toast("上传头像图片只能是 JPG 格式!", "error");
-      }
+      const isLt2M = file.size / 1024 / 1024 < 5;
+
       if (!isLt2M) {
         this.common.toast("上传头像图片大小不能超过 2MB!", "error");
       }
-      return isJPG && isLt2M;
+
+      return isLt2M;
     },
   },
 };

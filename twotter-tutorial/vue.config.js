@@ -1,7 +1,7 @@
 /*
  * @Author: CC-TSR
  * @Date: 2021-01-05 10:22:06
- * @LastEditTime: 2021-01-07 02:12:45
+ * @LastEditTime: 2021-01-07 12:25:37
  * @LastEditors: xiejiancheng1999@qq.com
  * @Description: 
  * @FilePath: \twotter-tutorial\vue.config.js
@@ -15,5 +15,8 @@ module.exports = {
             }
         }
     },
-    productionSourceMap: false
+    productionSourceMap: false,
+    configureWebpack: {
+        devtool: undefined
+    }
 }

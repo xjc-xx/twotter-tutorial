@@ -1,7 +1,7 @@
 <!--
  * @Author: CC-TSR
  * @Date: 2021-01-04 11:27:46
- * @LastEditTime: 2021-01-07 09:12:22
+ * @LastEditTime: 2021-01-07 12:33:33
  * @LastEditors: xiejiancheng1999@qq.com
  * @Description: 
  * @FilePath: \twotter-tutorial\src\views\UserProfile.vue
@@ -15,7 +15,11 @@
         <h1 class="user-profile__username">
           @ {{ state.user.username }}
           <div class="head_img">
-            <img class="head-image" :src="state.user.userHeadImage" alt="" />
+            <img
+              class="head-image"
+              :src="state.baseUrl + state.user.userHeadImage"
+              alt=""
+            />
           </div>
         </h1>
         <div v-if="state.user.isAdmin" class="user-profile__admin-badge">
@@ -47,7 +51,7 @@ import CreateTwootPanel from "@/components/CreateTwootPanel.vue";
 import { reactive, getCurrentInstance } from "vue";
 import Header from "@/components/TheHeader";
 import { useStore } from "vuex";
-import axios from 'axios';
+import axios from "axios";
 
 export default {
   name: "UserProfile",
@@ -60,10 +64,11 @@ export default {
       followers: 0,
       user: store.state.user,
       Alltwoots: [],
+      baseUrl: store.state.apiBaseUrl,
     });
-    let url = store.state.apiBaseUrl
+
     function getAllTwoots() {
-      axios.get(`${url}GetTwoot`).then((res) => {
+      axios.get(`${state.baseUrl}GetTwoot`).then((res) => {
         state.Alltwoots = res.data;
       });
     }
@@ -75,7 +80,7 @@ export default {
 
     function toggleStar(id) {
       clearInterval(handleGetTwoots);
-      axios.post(`${url}StarTwoot`, { id: id }).then(
+      axios.post(`${state.baseUrl}StarTwoot`, { id: id }).then(
         (res) => {
           console.log(res.data);
           if (res.data == "200") {
@@ -99,7 +104,7 @@ export default {
       };
       gotoTop();
       // state.user.twoots.unshift(newTwoot);
-      axios.post(`${url}CreateTwoot`, newTwoot).then((res) => {
+      axios.post(`${state.baseUrl}CreateTwoot`, newTwoot).then((res) => {
         if (res.data == "200") {
           ctx.common.toast("发表成功", "success");
         }

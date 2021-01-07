@@ -1,7 +1,7 @@
 <!--
  * @Author: CC-TSR
  * @Date: 2021-01-04 14:34:11
- * @LastEditTime: 2021-01-07 09:32:30
+ * @LastEditTime: 2021-01-07 12:30:05
  * @LastEditors: xiejiancheng1999@qq.com
  * @Description: 
  * @FilePath: \twotter-tutorial\src\components\TwootItem.vue
@@ -13,7 +13,7 @@
       <div class="head-img-div">
         <img
           class="head-image"
-          :src="`http://192.168.1.113:9999/static/${username}.jpg`"
+          :src="`${baseurl}static/${username}.jpg`"
           alt=""
         />
       </div>
@@ -46,7 +46,7 @@ export default {
       ctx.emit("event__star", id);
     }
     return {
-      star,
+      star
     };
   },
   props: {
@@ -63,6 +63,11 @@ export default {
       required: false,
       default: false,
     },
+  },
+  data() {
+    return {
+      baseurl: this.$store.state.apiBaseUrl
+    }
   },
 };
 </script>

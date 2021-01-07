@@ -1,7 +1,7 @@
 '''
 Author: CC-TSR
 Date: 2021-01-04 21:13:10
-LastEditTime: 2021-01-07 11:51:04
+LastEditTime: 2021-01-07 13:58:50
 LastEditors: xiejiancheng1999@qq.com
 Description: 
 FilePath: \python\api.py
@@ -82,38 +82,38 @@ def star(twoot, twootId):
 
 @app.route('/Register', methods=['Post'])
 def Register():
-    inputUserInfo = request.get_json()
-    inputUserInfo["isAdmin"] = True
-    print(inputUserInfo)
+    inputUserInfo = request.form
+    face = request.files.get('file')
+    userInfo = inputUserInfo.get('user')
+    print(userInfo)
+    # filename = secure_filename(userInfo["username"]) + '.' + face.split('.')[1].lower()
+    # face.save(os.path.join('./static', filename))
+    
     return ""
 
 
 @app.route('/Upload', methods=['Post'])
 def Upload():
-
     if request.method == 'POST':
         # check if the post request has the file part
         if ('file' not in request.files):
-            print(" 大苏打")
             flash('No file part')
             return '400'
         file = request.files['file']
         flash('No file part')
-        print(file.filename)
         # if user does not select file, browser also
         # submit an empty part without filename
         if file.filename == '':
             flash('No selected file')
             return '400'
         if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            #filename = secure_filename(file.filename)
+            #file.save(os.path.join('./static', filename))
             return '200'
         return "400"
 
 def allowed_file(filename):
-    return '.' in filename and \
-           filename.rsplit('.', 1)[1].lower() in ['.jpg']
+    return '.' in filename and filename.split('.')[1].lower() in ['jpg','png','gif']
 
 
 @app.route('/assets')
@@ -122,4 +122,4 @@ def url_for_img():
 
 
 if __name__ == '__main__':
-    app.run(host='192.168.1.113', port=9999)
+    app.run(host='192.168.1.66', port=9999)
