@@ -1,7 +1,7 @@
 <!--
  * @Author: CC-TSR
  * @Date: 2021-01-07 09:40:31
- * @LastEditTime: 2021-01-07 14:19:36
+ * @LastEditTime: 2021-01-07 16:31:19
  * @LastEditors: xiejiancheng1999@qq.com
  * @Description: 
  * @FilePath: \twotter-tutorial\src\components\register.vue
@@ -22,6 +22,9 @@
     >
       <el-form-item label="账号" prop="name">
         <el-input v-model="formData.name" placeholder="请输入用户名"></el-input>
+        <div v-if="isUsed" class="el-form-item__error">
+          此用户名已经被注册过了
+        </div>
       </el-form-item>
       <el-form-item label="密码" prop="password">
         <el-input
@@ -33,18 +36,19 @@
         <el-upload
           class="avatar-uploader"
           :action="uploadUrl"
-          :on-change="handleChange"
           :before-upload="beforeAvatarUpload"
           :limit="1"
           :show-file-list="false"
           :auto-upload="false"
+          :on-exceed="handleExceed"
+          :on-change="handleChange"
         >
           <img v-if="imageUrl" :src="imageUrl" class="avatar" alt="" />
           <em v-else class="el-icon-plus avatar-uploader-icon" />
         </el-upload>
       </el-form-item>
       <el-form-item class="dialog-footer" align="center">
-        <el-button type="primary" @click="onSave('formData')">保 存</el-button>
+        <el-button type="primary" @click="onSave('formData')">注册</el-button>
         <el-button @click="onCancel('formData')">取 消</el-button>
       </el-form-item>
     </el-form>
@@ -52,6 +56,7 @@
 </template>
 
 <script>
+import { h } from "vue";
 export default {
   data() {
     const validate = (rule, value, callback) => {
@@ -79,18 +84,33 @@ export default {
       reqFlag: {
         add: true,
       },
-      imageUrl: "",
-      imgName: "",
       file: [],
+      isUsed: false,
     };
   },
   computed: {
     uploadUrl() {
       return `${this.$store.state.apiBaseUrl}Upload`;
     },
+    imageUrl() {
+      console.log(this.file);
+      if (this.file[0]) {
+        if (this.file[0].raw) return URL.createObjectURL(this.file[0].raw);
+        return URL.createObjectURL(this.file[0]);
+      }
+      return "";
+    },
   },
   props: ["state"],
   components: {},
+  watch: {
+    "formData.name": {
+      handler: function () {
+        this.isUsed = false;
+      },
+      deep: true,
+    },
+  },
   created() {},
   methods: {
     // 初始化
@@ -108,6 +128,10 @@ export default {
         if (valid) {
           const url = `${this.$store.state.apiBaseUrl}Register`;
           if (this.reqFlag.add) {
+            if (this.file.length < 1) {
+              this.common.toast("请提供您的头像", "warning");
+              return;
+            }
             this.reqFlag.add = false;
             let params = {
               username: this.formData.name,
@@ -118,17 +142,53 @@ export default {
               state: this.state,
             };
             let fd = new FormData();
-            fd.append("imgName", this.imgName);
-            fd.append("file", this.file[0].raw);
+            if (this.file[0].raw) {
+              fd.append("file", this.file[0].raw);
+            } else {
+              fd.append("file", this.file[0]);
+            }
+
             fd.append("user", JSON.stringify(params));
-            this.$http.post(url, fd).then((res) => {
-              if (res.code == 1) {
-                this.$common.toast("添加成功", "success", false);
-                this.$emit("addCallBack");
-                this.onCancel(formData);
+            this.$http.post(url, fd).then(
+              (res) => {
+                this.file = [];
+                console.log(res.data);
+                if (res.data === 200) {
+                  this.common.toast("注册成功", "success");
+                  this.$emit("addCallBack", this.formData.name);
+                  this.onCancel(formData);
+                } else {
+                  switch (res.data) {
+                    case 500:
+                      this.common.toast("后端发生未知错误", "error");
+                      break;
+                    case 501:
+                      this.common.toast("后端类型转换时遇到错误", "error");
+                      break;
+                    case 502:
+                      this.isUsed = true;
+                      this.$notify({
+                        title: "警告",
+                        message: h(
+                          "i",
+                          { style: "color: orange" },
+                          `${this.formData.name} 已经被注册过了`
+                        ),
+                      });
+                      break;
+                    default:
+                      break;
+                  }
+                }
+                this.reqFlag.add = true;
+              },
+              (err) => {
+                this.file = [];
+                this.common.toast("注册失败，网络异常", "error");
+                console.log(err);
+                this.reqFlag.add = true;
               }
-              this.reqFlag.add = true;
-            });
+            );
           }
         } else {
           console.log("error submit!!");
@@ -139,20 +199,19 @@ export default {
     // 取消
     onCancel(formName) {
       this.changeShowFlag();
-      this.imageUrl = "";
+      this.file = [];
       this.$refs[formName].resetFields();
     },
     // 关闭弹出框
     closeDialog() {
       this.$refs["formData"].resetFields();
-      this.imageUrl = "";
+      this.file = [];
     },
-
-    handleChange(res, file) {
-      console.log(file);
-      this.imageUrl = URL.createObjectURL(file[0].raw);
-      this.file = file;
-      this.imgName = file[0].name;
+    handleChange(file, filelist) {
+      this.file = filelist;
+    },
+    handleExceed(files, filelist) {
+      this.file = files;
     },
     beforeAvatarUpload(file) {
       console.log(file.type);
@@ -160,7 +219,7 @@ export default {
       const isLt2M = file.size / 1024 / 1024 < 5;
 
       if (!isLt2M) {
-        this.common.toast("上传头像图片大小不能超过 2MB!", "error");
+        this.common.toast("上传头像图片大小不能超过 5MB!", "error");
       }
 
       return isLt2M;

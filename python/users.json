@@ -3,20 +3,18 @@
         "id": 1,
         "username": "cc_tsr",
         "password": "abcd123456",
-        "firstName": "渐成",
-        "lastName": "谢",
+        "firstName": "\u6e10\u6210",
+        "lastName": "\u8c22",
         "email": "xiejiancheng1999@qq.com",
         "isAdmin": true,
         "userHeadImage": "static/cc_tsr.jpg",
         "twoots": [{
-                "id": 1,
-                "content": "Twotter is Amazing"
-            },
-            {
-                "id": 2,
-                "content": "Vue is Awaresome"
-            }
-        ],
+            "id": 1,
+            "content": "Twotter is Amazing"
+        }, {
+            "id": 2,
+            "content": "Vue is Awaresome"
+        }],
         "twoots_star": []
     },
     "luobo": {
@@ -24,8 +22,8 @@
         "username": "luobo",
         "userHeadImage": "static/luobo.jpg",
         "password": "123456",
-        "firstName": "腌",
-        "lastName": "萝卜",
+        "firstName": "\u814c",
+        "lastName": "\u841d\u535c",
         "email": null,
         "isAdmin": false,
         "twoots": null,
@@ -36,12 +34,23 @@
         "userHeadImage": "static/duck.jpg",
         "username": "duck",
         "password": "123456",
-        "firstName": "小",
-        "lastName": "黄鸭",
+        "firstName": "\u5c0f",
+        "lastName": "\u9ec4\u9e2d",
         "email": null,
         "isAdmin": false,
         "twoots": null,
         "twoots_star": []
+    },
+    "wendy_xi": {
+        "username": "wendy_xi",
+        "password": "xixixi",
+        "email": "",
+        "firstName": "\u7532\u4e59\u4e19\u4e01",
+        "lastName": "\u4e0d\u77e5\u540d\u7684",
+        "twoots": "",
+        "twoots_star": [],
+        "isAdmin": true,
+        "userHeadImage": "./static\\wendy_xi.png",
+        "id": 4
     }
-    
 }

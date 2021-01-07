@@ -1,7 +1,7 @@
 <!--
  * @Author: CC-TSR
  * @Date: 2021-01-05 18:27:33
- * @LastEditTime: 2021-01-07 09:51:59
+ * @LastEditTime: 2021-01-07 15:22:00
  * @LastEditors: xiejiancheng1999@qq.com
  * @Description: 
  * @FilePath: \twotter-tutorial\src\views\Login.vue
@@ -135,6 +135,9 @@ export default {
         this.$refs.add.init();
       });
     },
+    callBackAdd(username){
+      this.formData.name = username
+    }
   },
 };
 </script>

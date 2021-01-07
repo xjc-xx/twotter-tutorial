@@ -1,46 +1,53 @@
 <!--
  * @Author: CC-TSR
  * @Date: 2021-01-04 11:27:46
- * @LastEditTime: 2021-01-07 12:33:33
+ * @LastEditTime: 2021-01-07 17:11:43
  * @LastEditors: xiejiancheng1999@qq.com
  * @Description: 
  * @FilePath: \twotter-tutorial\src\views\UserProfile.vue
  * @可以输入预定的版权声明、个性签名、空行等
 -->
 <template>
-  <Header />
-  <div class="user-profile">
-    <div class="user-profile-sidebar">
-      <div class="user-profile__user-panel">
-        <h1 class="user-profile__username">
-          @ {{ state.user.username }}
-          <div class="head_img">
-            <img
-              class="head-image"
-              :src="state.baseUrl + state.user.userHeadImage"
-              alt=""
-            />
+  <div>
+    <Header />
+    <div class="user-profile">
+      <div class="user-profile-sidebar">
+        <div class="user-profile__user-panel">
+          <h1 class="user-profile__username">
+            @ {{ state.user.username }}
+            <div class="head_img">
+              <img
+                class="head-image"
+                :src="state.baseUrl + state.user.userHeadImage"
+                alt=""
+              />
+            </div>
+          </h1>
+          <div v-if="state.user.isAdmin" class="user-profile__admin-badge">
+            admin
           </div>
-        </h1>
-        <div v-if="state.user.isAdmin" class="user-profile__admin-badge">
-          admin
+          <div>
+            <strong id="followerCount">Followers: </strong>{{ state.followers }}
+          </div>
         </div>
-        <div>
-          <strong id="followerCount">Followers: </strong>{{ state.followers }}
-        </div>
+        <create-twoot-panel @publish="publishTwoot" />
       </div>
-      <create-twoot-panel @publish="publishTwoot" />
+      <transition-group
+        name="fade"
+        tag="div"
+        class="user-profile__twoots-wraper"
+      >
+        <twoot-item
+          v-for="twoot in state.Alltwoots"
+          :key="twoot.id"
+          :username="twoot.username"
+          :faceUrl="state.user.userHeadImage"
+          :twoot="twoot"
+          :isStar="twoot.isStar"
+          @event__star="toggleStar"
+        />
+      </transition-group>
     </div>
-    <transition-group name="fade" tag="div" class="user-profile__twoots-wraper">
-      <twoot-item
-        v-for="twoot in state.Alltwoots"
-        :key="twoot.id"
-        :username="twoot.username"
-        :twoot="twoot"
-        :isStar="twoot.isStar"
-        @event__star="toggleStar"
-      />
-    </transition-group>
   </div>
 </template>
 
@@ -180,7 +187,7 @@ export default {
     position: sticky;
     top: 15vh;
     box-sizing: border-box;
-    z-index: 1;
+   
     max-height: 50vh;
     .user-profile__user-panel {
       display: flex;

@@ -1,7 +1,7 @@
 <!--
  * @Author: CC-TSR
  * @Date: 2021-01-05 14:18:26
- * @LastEditTime: 2021-01-07 09:25:19
+ * @LastEditTime: 2021-01-07 17:27:04
  * @LastEditors: xiejiancheng1999@qq.com
  * @Description: 
  * @FilePath: \twotter-tutorial\src\components\TheHeader.vue
@@ -21,6 +21,9 @@
       </li>
       <li class="links">
         <router-link to="/info"> User </router-link>
+      </li>
+      <li class="links">
+        <router-link to="/covid"> Covid-Map </router-link>
       </li>
       <li class="links">
         <a @click="logout"> Sign Out </a>
@@ -69,9 +72,10 @@ export default {
   top: 0;
   box-sizing: border-box;
   height: 7vh;
+  background-color: white;
+  z-index: 999;
   box-shadow: 0 2px 5px #2c3e50;
   border-bottom: 1px solid grey;
-  z-index: 2;
   .logo {
     margin-left: 2vw;
     font-size: 25px;
