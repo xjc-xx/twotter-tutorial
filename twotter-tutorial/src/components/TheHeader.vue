@@ -1,7 +1,7 @@
 <!--
  * @Author: CC-TSR
  * @Date: 2021-01-05 14:18:26
- * @LastEditTime: 2021-01-06 16:11:38
+ * @LastEditTime: 2021-01-07 09:25:19
  * @LastEditors: xiejiancheng1999@qq.com
  * @Description: 
  * @FilePath: \twotter-tutorial\src\components\TheHeader.vue
@@ -29,7 +29,7 @@
     </ul>
     <div
       class="links"
-      style="margin-left: auto; font-size: 3vh; cursor: pointer"
+      style="color: #ba78fc; margin-left: auto; font-size: 3vh; cursor: pointer"
     >
       {{ username }}
     </div>
@@ -41,7 +41,7 @@ import { h } from "vue";
 export default {
   computed: {
     username() {
-      return this.$store.state.user.username;
+      return `${this.$store.state.user.firstName} ${this.$store.state.user.lastName}`;
     },
   },
   methods: {

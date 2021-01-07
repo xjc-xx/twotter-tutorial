@@ -1,7 +1,7 @@
 <!--
  * @Author: CC-TSR
  * @Date: 2021-01-04 14:34:11
- * @LastEditTime: 2021-01-06 18:13:21
+ * @LastEditTime: 2021-01-07 09:32:30
  * @LastEditors: xiejiancheng1999@qq.com
  * @Description: 
  * @FilePath: \twotter-tutorial\src\components\TwootItem.vue
@@ -10,11 +10,20 @@
 <template>
   <div class="twoot-item" @click="star(twoot.id)" :key="twoot.id">
     <div class="user-profile__twoot">
-      <div class="twoot-item__user">@{{ username }}</div>
+      <div class="head-img-div">
+        <img
+          class="head-image"
+          :src="`http://192.168.1.113:9999/static/${username}.jpg`"
+          alt=""
+        />
+      </div>
+      <div style="padding-left: 0.5vw">  <div class="twoot-item__user">@{{ username }}</div>
       <div class="twoot-item__content">
         {{ twoot.content }}
-        <em :class="['nomal-em', { em_isLike: !isStar }]">like this? <img class="Icon" src="../assets/icons/svg/love.svg" alt="" /></em
-        >
+        <em :class="['nomal-em', { em_isLike: !isStar }]"
+          >like this?
+          <img class="Icon" src="../assets/icons/svg/love.svg" alt=""
+        /></em>
         <transition name="fade">
           <img
             class="likeIcon Icon"
@@ -24,6 +33,7 @@
           />
         </transition>
       </div>
+    </div>
     </div>
   </div>
 </template>
@@ -66,7 +76,7 @@ export default {
   opacity: 0;
 }
 .twoot-item {
-  padding: 15px;
+  padding: 15px 15px 15px 0;
   background: white;
   border-radius: 5px;
   border: 1px solid #203e3f;
@@ -82,6 +92,9 @@ export default {
       opacity: 1 !important;
     }
   }
+  .user-profile__twoot{
+    display: flex;
+  }
 
   .twoot-item__user {
     text-align: left;
@@ -94,6 +107,8 @@ export default {
     justify-content: space-between;
     padding: 0 15px;
     .nomal-em {
+      position: absolute;
+      right: 2vw;
       opacity: 0;
       color: rgb(236, 58, 161);
       &.em_isLike {

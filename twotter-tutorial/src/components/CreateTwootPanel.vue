@@ -1,7 +1,7 @@
 <!--
  * @Author: CC-TSR
  * @Date: 2021-01-05 10:54:51
- * @LastEditTime: 2021-01-06 17:12:10
+ * @LastEditTime: 2021-01-07 09:05:39
  * @LastEditors: xiejiancheng1999@qq.com
  * @Description: 
  * @FilePath: \twotter-tutorial\src\components\CreateTwootPanel.vue
@@ -50,6 +50,7 @@
 
 <script>
 import { reactive, computed } from "vue";
+import common from '@/assets/js/common'
 export default {
   name: "CreateTwootPanel",
   setup(paops, ctx) {
@@ -81,8 +82,8 @@ export default {
 
     function publishTwoot() {
       if (!state.newTwootContent) return;
-      if (state.newTwootContent > 120) {
-        ctx.common.toast("字数太多了，恕我背不动", "warning");
+      if (newTwootCaracterCount.value  > 120) {
+        common.toast("字数太多了，恕我背不动", "warning");
         return;
       }
       ctx.emit("publish", twoot);
