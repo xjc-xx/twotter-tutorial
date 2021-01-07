@@ -1,10 +1,10 @@
 '''
 Author: CC-TSR
 Date: 2021-01-04 21:13:10
-LastEditTime: 2021-01-06 18:39:19
+LastEditTime: 2021-01-07 00:41:33
 LastEditors: xiejiancheng1999@qq.com
 Description: 
-FilePath: \twotter-tutoriald:\VS-project\twotter-tutorial\python\api.py
+FilePath: \python\api.py
 可以输入预定的版权声明、个性签名、空行等
 '''
 import random
@@ -32,9 +32,20 @@ def CreateTwoot():
 
 @app.route('/StarTwoot', methods=['Post'])
 def StarTwoot():
-    a = [{"a": 2}]
-    with open(twootsUrl, 'w+', encoding='utf-8') as twootHandle:
-        json.dump(a, twootHandle)
+    twootIdDic = request.get_json()
+    twootId = twootIdDic['id']
+    with open(twootsUrl, 'r+') as twootHandle:
+        print("-------------")
+        twoots = json.load(twootHandle)
+        for twoot in twoots:
+            if(twoot['id'] == twootId):
+                twoot['isStar'] = bool(1-twoot['isStar'])
+                break
+        twootHandle.seek(0)
+        twootHandle.truncate()
+        json.dump(twoots, twootHandle)
+        return "200"
+        
 
 @app.route('/GetTwoot', methods=['GET'])
 def GetTwoot():

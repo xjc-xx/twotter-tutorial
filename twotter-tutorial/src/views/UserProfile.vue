@@ -1,7 +1,7 @@
 <!--
  * @Author: CC-TSR
  * @Date: 2021-01-04 11:27:46
- * @LastEditTime: 2021-01-06 18:23:53
+ * @LastEditTime: 2021-01-07 02:23:17
  * @LastEditors: xiejiancheng1999@qq.com
  * @Description: 
  * @FilePath: \twotter-tutorial\src\views\UserProfile.vue
@@ -47,6 +47,7 @@ import CreateTwootPanel from "@/components/CreateTwootPanel.vue";
 import { reactive, getCurrentInstance } from "vue";
 import Header from "@/components/TheHeader";
 import { useStore } from "vuex";
+import axios from 'axios';
 
 export default {
   name: "UserProfile",
@@ -60,10 +61,10 @@ export default {
       user: store.state.user,
       Alltwoots: [],
     });
-    let url = "http://192.168.1.113:9999/";
+    let url = "http://219.145.19.17:9999/";
 
     function getAllTwoots() {
-      ctx.$http.get(`${url}GetTwoot`).then((res) => {
+      axios.get(`${url}GetTwoot`).then((res) => {
         state.Alltwoots = res.data;
       });
     }
@@ -74,15 +75,19 @@ export default {
     }
 
     function toggleStar(id) {
-      clearInterval(handleGetTwoots)
-      ctx.$http.post(`${url}StarTwoot`, {"id":id}).then((res) => {
-        if (res.data === "200") {
-          console.log("点赞");
-          handleGetTwoots = setInterval(getAllTwoots, 500);
+      clearInterval(handleGetTwoots);
+      axios.post(`${url}StarTwoot`, { id: id }).then(
+        (res) => {
+          console.log(res.data);
+          if (res.data == "200") {
+            console.log("点赞");
+            handleGetTwoots = setInterval(getAllTwoots, 100);
+          }
+        },
+        (err) => {
+          console.log(err);
         }
-      },(err)=>{
-        console.log(err)
-      });
+      );
     }
 
     function publishTwoot(twoot) {
@@ -95,7 +100,7 @@ export default {
       };
       gotoTop();
       // state.user.twoots.unshift(newTwoot);
-      ctx.$http.post(`${url}CreateTwoot`, newTwoot).then((res) => {
+      axios.post(`${url}CreateTwoot`, newTwoot).then((res) => {
         if (res.data == "200") {
           ctx.common.toast("发表成功", "success");
         }
@@ -180,9 +185,9 @@ export default {
       border-radius: 2vw;
       border: 1px solid #57e6ce;
       transition: all 0.5s ease;
+      box-shadow: 2px 2px 2px #095a4c;
+      border-radius: 2vw;
       &:hover {
-        box-shadow: 2px 2px 2px #095a4c;
-        border-radius: 2vw;
         transform: scale(1.1, 1.1);
       }
       h1 {

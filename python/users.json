@@ -7,7 +7,7 @@
         "lastName": "谢",
         "email": "xiejiancheng1999@qq.com",
         "isAdmin": true,
-        "userHeadImage": "http://127.0.0.1:9999/static/cc_tsr.jpg",
+        "userHeadImage": "http://219.145.19.17:9999/static/cc_tsr.jpg",
         "twoots": [{
                 "id": 1,
                 "content": "Twotter is Amazing"
@@ -19,9 +19,10 @@
         ],
         "twoots_star": []
     },
-    "Vue3_Robot": {
+    "luobo": {
         "id": 2,
-        "username": "Vue3_Robot",
+        "username": "luobo",
+        "userHeadImage": "http://219.145.19.17:9999/static/luobo.jpg",
         "password": "123456",
         "firstName": "腌",
         "lastName": "萝卜",
@@ -30,10 +31,10 @@
         "twoots": null,
         "twoots_star": []
     },
-    "yello_duck": {
+    "duck": {
         "id": 2,
-        "userHeadImage": "http://127.0.0.1:9999/static/default.jpg",
-        "username": "yello_duck",
+        "userHeadImage": "http://219.145.19.17:9999/static/default.jpg",
+        "username": "duck",
         "password": "123456",
         "firstName": "小",
         "lastName": "黄鸭",
