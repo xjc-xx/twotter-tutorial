@@ -1,7 +1,7 @@
 '''
 Author: CC-TSR
 Date: 2021-01-04 21:13:10
-LastEditTime: 2021-01-07 13:58:50
+LastEditTime: 2021-01-07 14:20:15
 LastEditors: xiejiancheng1999@qq.com
 Description: 
 FilePath: \python\api.py
@@ -85,10 +85,9 @@ def Register():
     inputUserInfo = request.form
     face = request.files.get('file')
     userInfo = inputUserInfo.get('user')
-    print(userInfo)
-    # filename = secure_filename(userInfo["username"]) + '.' + face.split('.')[1].lower()
-    # face.save(os.path.join('./static', filename))
-    
+    userInfo = json.loads(userInfo)
+    filename = secure_filename(userInfo["username"]) + '.' + inputUserInfo.get('imgName').split('.')[1]
+    face.save(os.path.join('./static', filename))
     return ""
 
 
@@ -112,8 +111,9 @@ def Upload():
             return '200'
         return "400"
 
+
 def allowed_file(filename):
-    return '.' in filename and filename.split('.')[1].lower() in ['jpg','png','gif']
+    return '.' in filename and filename.split('.')[1].lower() in ['jpg', 'png', 'gif']
 
 
 @app.route('/assets')

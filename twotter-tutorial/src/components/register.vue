@@ -1,7 +1,7 @@
 <!--
  * @Author: CC-TSR
  * @Date: 2021-01-07 09:40:31
- * @LastEditTime: 2021-01-07 13:58:31
+ * @LastEditTime: 2021-01-07 14:19:36
  * @LastEditors: xiejiancheng1999@qq.com
  * @Description: 
  * @FilePath: \twotter-tutorial\src\components\register.vue
@@ -80,8 +80,8 @@ export default {
         add: true,
       },
       imageUrl: "",
-      
-      file:[]
+      imgName: "",
+      file: [],
     };
   },
   computed: {
@@ -117,10 +117,10 @@ export default {
               lastName: "不知名的",
               state: this.state,
             };
-            let fd = new FormData()
-            
-            fd.append('file', this.file[0].raw)
-            fd.append('user',JSON.stringify(params))
+            let fd = new FormData();
+            fd.append("imgName", this.imgName);
+            fd.append("file", this.file[0].raw);
+            fd.append("user", JSON.stringify(params));
             this.$http.post(url, fd).then((res) => {
               if (res.code == 1) {
                 this.$common.toast("添加成功", "success", false);
@@ -147,11 +147,12 @@ export default {
       this.$refs["formData"].resetFields();
       this.imageUrl = "";
     },
-    
+
     handleChange(res, file) {
-      console.log(file)
+      console.log(file);
       this.imageUrl = URL.createObjectURL(file[0].raw);
-      this.file = file
+      this.file = file;
+      this.imgName = file[0].name;
     },
     beforeAvatarUpload(file) {
       console.log(file.type);
