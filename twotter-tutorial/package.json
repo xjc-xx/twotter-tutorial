@@ -40,7 +40,8 @@
     "rules": {
       "vue/html-self-closing": "off",
       "vue/no-multiple-template-root": 0,
-      "vue/no-unused-vars": "off"
+      "vue/no-unused-vars": "off",
+      "no-unused-vars": "off"
     },
     "parserOptions": {
       "parser": "babel-eslint"

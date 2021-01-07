@@ -7,7 +7,7 @@
         "lastName": "谢",
         "email": "xiejiancheng1999@qq.com",
         "isAdmin": true,
-        "userHeadImage": "http://219.145.19.17:9999/static/cc_tsr.jpg",
+        "userHeadImage": "http://192.168.1.113:9999/static/cc_tsr.jpg",
         "twoots": [{
                 "id": 1,
                 "content": "Twotter is Amazing"
@@ -22,7 +22,7 @@
     "luobo": {
         "id": 2,
         "username": "luobo",
-        "userHeadImage": "http://219.145.19.17:9999/static/luobo.jpg",
+        "userHeadImage": "http://192.168.1.113:9999/static/luobo.jpg",
         "password": "123456",
         "firstName": "腌",
         "lastName": "萝卜",
@@ -32,8 +32,8 @@
         "twoots_star": []
     },
     "duck": {
-        "id": 2,
-        "userHeadImage": "http://219.145.19.17:9999/static/default.jpg",
+        "id": 3,
+        "userHeadImage": "http://192.168.1.113:9999/static/duck.jpg",
         "username": "duck",
         "password": "123456",
         "firstName": "小",

@@ -1,7 +1,7 @@
 <!--
  * @Author: CC-TSR
  * @Date: 2021-01-05 18:27:33
- * @LastEditTime: 2021-01-06 18:39:29
+ * @LastEditTime: 2021-01-07 09:51:59
  * @LastEditors: xiejiancheng1999@qq.com
  * @Description: 
  * @FilePath: \twotter-tutorial\src\views\Login.vue
@@ -38,13 +38,22 @@
         <el-button type="primary" @click="submitLogin('formData')"
           >登录</el-button
         >
+        <el-button @click="regis('formData')">注册</el-button>
       </el-form-item>
     </el-form>
+    <register
+      v-if="showFlag.add"
+      ref="add"
+      state="个人注册"
+      @addCallBack="callBackAdd"
+    />
   </div>
 </template>
 
 <script>
+import register from "@/components/register.vue";
 export default {
+  components: { register },
   data() {
     const validate = (rule, value, callback) => {
       const reg = /^\w{3,20}$/g;
@@ -79,7 +88,7 @@ export default {
     submitLogin(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          const url = "http://219.145.19.17:9999/Login";
+          const url = this.$store.state.apiBaseUrl;
           if (this.reqFlag.login) {
             this.reqFlag.login = false;
             let params = {
@@ -87,7 +96,7 @@ export default {
               password: this.formData.password,
             };
             // 向后端发送请求
-            this.$http.post(url, params).then(
+            this.$http.post(`${url}Login`, params).then(
               (res) => {
                 if (res.data.stateCode == 200) {
                   // 登录成功
@@ -119,7 +128,7 @@ export default {
         }
       });
     },
-    resetForm(formName) {
+    regis(formName) {
       this.$refs[formName].resetFields();
       this.showFlag.add = true;
       this.$nextTick(() => {

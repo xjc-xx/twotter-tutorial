@@ -1,4 +1,11 @@
 body {
     margin: 0;
     padding: 0;
+
+    .head-image {
+        border-radius: 3vh;
+        margin-left: 1.5vw;
+        min-width: 5vh;
+        max-height: 5vh;
+    }
 }

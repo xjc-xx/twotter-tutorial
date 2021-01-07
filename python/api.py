@@ -1,7 +1,7 @@
 '''
 Author: CC-TSR
 Date: 2021-01-04 21:13:10
-LastEditTime: 2021-01-07 00:41:33
+LastEditTime: 2021-01-07 11:51:04
 LastEditors: xiejiancheng1999@qq.com
 Description: 
 FilePath: \python\api.py
@@ -10,12 +10,14 @@ FilePath: \python\api.py
 import random
 import os
 import json
-from flask import Flask, request, url_for
+from flask import Flask, request, flash, url_for
 from flask_cors import CORS
+from werkzeug.utils import secure_filename
 
 os.environ['NLS_LANG'] = 'SIMPLIFIED CHINESE_CHINA.UTF8'
 app = Flask(__name__)
 app.debug = False
+app.secret_key = "super secret key"
 CORS(app, supports_credentials=True)
 twootsUrl = "./twoots.json"
 
@@ -45,7 +47,7 @@ def StarTwoot():
         twootHandle.truncate()
         json.dump(twoots, twootHandle)
         return "200"
-        
+
 
 @app.route('/GetTwoot', methods=['GET'])
 def GetTwoot():
@@ -78,10 +80,46 @@ def star(twoot, twootId):
     return twoot
 
 
+@app.route('/Register', methods=['Post'])
+def Register():
+    inputUserInfo = request.get_json()
+    inputUserInfo["isAdmin"] = True
+    print(inputUserInfo)
+    return ""
+
+
+@app.route('/Upload', methods=['Post'])
+def Upload():
+
+    if request.method == 'POST':
+        # check if the post request has the file part
+        if ('file' not in request.files):
+            print(" 大苏打")
+            flash('No file part')
+            return '400'
+        file = request.files['file']
+        flash('No file part')
+        print(file.filename)
+        # if user does not select file, browser also
+        # submit an empty part without filename
+        if file.filename == '':
+            flash('No selected file')
+            return '400'
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            return '200'
+        return "400"
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ['.jpg']
+
+
 @app.route('/assets')
 def url_for_img():
     print(url_for('static', filename='cc_tsr.jpg'))
 
 
 if __name__ == '__main__':
-    app.run(host='192.168.1.66', port=9999)
+    app.run(host='192.168.1.113', port=9999)

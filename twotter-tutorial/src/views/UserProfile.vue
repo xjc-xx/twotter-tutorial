@@ -1,7 +1,7 @@
 <!--
  * @Author: CC-TSR
  * @Date: 2021-01-04 11:27:46
- * @LastEditTime: 2021-01-07 02:23:17
+ * @LastEditTime: 2021-01-07 09:12:22
  * @LastEditors: xiejiancheng1999@qq.com
  * @Description: 
  * @FilePath: \twotter-tutorial\src\views\UserProfile.vue
@@ -61,8 +61,7 @@ export default {
       user: store.state.user,
       Alltwoots: [],
     });
-    let url = "http://219.145.19.17:9999/";
-
+    let url = store.state.apiBaseUrl
     function getAllTwoots() {
       axios.get(`${url}GetTwoot`).then((res) => {
         state.Alltwoots = res.data;
@@ -193,12 +192,6 @@ export default {
       h1 {
         margin: 0 0 10px 0;
         display: flex;
-        .head-image {
-          border-radius: 3vh;
-          margin-left: 1.5vw;
-          min-width: 5vh;
-          max-height: 5vh;
-        }
       }
       .user-profile__admin-badge {
         background-color: purple;
